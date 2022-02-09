@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link href="https://kit-pro.fontawesome.com/releases/v5.15.4/css/pro.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: rgb(217, 210, 233);
+        }
+        
+        .container {
+            display: flex;
+            height: 90vh;
+            justify-content: center;
+            margin-top: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container>h3 {
+            width: 280px;
+            text-align: center;
+            padding: 10px;
+            box-shadow: rgba(142, 124, 195, .8) 0px 0px 0px 3px;
+            border-radius: 5px;
+            background-color: rgba(217, 210, 233, .8);
+            font-size: 24px;
+        }
+        
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 80vw;
+        }
+        
+        td,
+        th {
+            border: 1px solid rgba(13, 12, 17, 0.8);
+            background-color: rgba(180, 167, 214, .5);
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(142, 124, 195, .8);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>User List <i class="fad fa-users" style="color: rgba(142, 124, 195, .8);"></i></h3>
+        <div class="result">
+            <table class="display"></table>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const getusers = async() => {
+            await axios.get('https://jsonplaceholder.typicode.com/users').then((results) => {
+                console.log('result: ', results)
+                var output = `<tr>` +
+                    `<th>ID</th>` +
+                    `<th>Name</th>` +
+                    `<th>Username</th>` +
+                    `<th>Email</th>` +
+                    `</tr>`;
+                for (result in results.data) {
+                    output += `<tr>` +
+                        `<td>${results.data[result].id}` +
+                        `<td>${results.data[result].name}</td>` +
+                        `<td>${results.data[result].username}</td>` +
+                        `<td>${results.data[result].email}</td>` +
+                        `</tr>`
+                }
+
+                document.getElementsByClassName('display')[0].innerHTML = output;
+            })
+        };
+
+        getusers();
+    </script>
+</body>
+
+</html>
